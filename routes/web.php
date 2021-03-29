@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ArticleController::class, 'index'])->name('article.index');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::get('/', [ArticleController::class, 'index'])->name('article.index');
+Route::get('/{user:name}/{article:slug}', [ArticleController::class, 'show'])->name('article.show');
