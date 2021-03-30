@@ -1,4 +1,4 @@
-<div class="border border-gray-300 rounded bg-white p-4 flex items-start space-x-4">
+<div class="shadow rounded bg-white p-4 flex items-start space-x-4">
 
     <div class="flex-shrink-0">
         <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->name }}" alt="user_avatar" class="rounded-full w-10 h-10">

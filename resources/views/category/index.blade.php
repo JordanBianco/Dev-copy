@@ -7,7 +7,7 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
 
                 @foreach ($categories as $category)
-                <div class="border border-gray-300 rounded-lg bg-white relative">
+                <div class="shadow rounded-lg bg-white relative">
                     <div class="bg-red-400 rounded-t-lg py-2"></div>
 
                     <div class="p-4 mb-20">

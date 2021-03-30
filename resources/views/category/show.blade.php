@@ -1,6 +1,6 @@
 <x-app-layout>
     <div>
-        <header class="w-full border border-gray-300 rounded-lg bg-white my-6">
+        <header class="w-full shadow rounded-lg bg-white my-6">
             <div class="bg-red-400 rounded-t-lg py-2"></div>
 
             <div class="flex items-center justify-between space-x-16 p-6">

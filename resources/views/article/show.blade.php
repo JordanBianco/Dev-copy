@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="w-2/3 bg-white border border-gray-300 rounded-lg py-8 px-12">
+        <div class="w-2/3 bg-white shadow rounded-lg py-8 px-12">
             
             <h2 class="font-extrabold text-6xl">{{ $article->title }}</h2>
 
@@ -57,7 +57,7 @@
 
         </div>
 
-        <div class="w-1/3 bg-white border border-gray-300 rounded-lg">
+        <div class="w-1/3 bg-white shadow rounded-lg">
 
             <div class="bg-green-700 p-4 rounded-t-lg"></div>
 
