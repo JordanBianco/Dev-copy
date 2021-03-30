@@ -29,8 +29,11 @@
             <h2 class="font-extrabold text-6xl">{{ $article->title }}</h2>
 
             <div class="flex items-center space-x-2 text-sm my-3 text-gray-600">
-                <span>#career</span>
-                <span>#webdev</span> 
+                @foreach ($article->categories as $category)
+                <a href="{{ route('category.show', $category->name) }}">
+                    <span class="hover:text-blue-800 transition duration-300">#{{$category->name}}</span>
+                </a>
+                @endforeach
             </div>
 
             <div class="flex items-center space-x-4">

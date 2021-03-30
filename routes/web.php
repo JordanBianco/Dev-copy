@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
-
+Route::get('/c/{category:name}', [CategoryController::class, 'show'])->name('category.show');
+// Articles
 Route::get('/', [ArticleController::class, 'index'])->name('article.index');
 Route::get('/{user:name}/{article:slug}', [ArticleController::class, 'show'])->name('article.show');
+
+// Category
+Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+
