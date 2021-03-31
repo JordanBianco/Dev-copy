@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function articles()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class)->latest();
     }
     
     public function profile()
@@ -63,5 +63,10 @@ class User extends Authenticatable
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_user')->withTimestamps();
+    }
+
+    public function savedArticles()
+    {
+        return $this->belongsToMany(Article::class, 'article_user')->withTimestamps();
     }
 }

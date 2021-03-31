@@ -47,7 +47,7 @@
                 
                 <span class="text-sm text-gray-600">{{ $article->created_at->format('M d') }}</span>
 
-                <span class="text-sm text-gray-600">14 min read</span>
+                <span class="text-sm text-gray-600">{{ readingTime($article->body) }} min read</span>
 
             </div>
 

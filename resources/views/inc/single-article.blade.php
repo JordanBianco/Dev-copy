@@ -41,10 +41,27 @@
                 </div>
 
                 <div class="flex items-center space-x-4">
-                    <span class="text-gray-600 text-xs">2 min read</span>
-                    <button class="bg-gray-200 text-sm px-3 py-1 rounded focus:outline-none">
-                        Save
-                    </button>
+                    <span class="text-gray-600 text-xs">{{ readingTime($article->body) }} min read</span>
+                    
+                    @guest
+                    <a href="{{ route('login') }}">
+                        <button class="bg-gray-200 text-sm px-3 py-1 rounded focus:outline-none">
+                            Save
+                        </button>
+                    </a>
+                    @else
+                        @if (auth()->id() !== $article->author->id)
+                        <form action="{{ route('saved.store', $article->id) }}" method="POST">
+                            
+                            @csrf
+                            
+                            <button type="submit" class="bg-gray-200 text-sm px-3 py-1 rounded focus:outline-none">
+                                {{-- {{ auth()->user()->savedArticles()->pluck('articles.id')->contains($article->id) ? 'Saved' : 'Save' }} --}}
+                            </button>
+                        </form>
+                        @endif
+                    @endguest
+                    
                 </div>
             </div>
 

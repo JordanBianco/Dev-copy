@@ -27,9 +27,9 @@
                         <button
                             type="submit"
                             class="absolute bottom-4 left-4 transtion duration-300 text-sm px-4 py-2 rounded focus:outline-none
-                            {{ $category->users->pluck('id')->contains(auth()->id()) ? 'text-white bg-indigo-600 hover:bg-indigo-700' : 'bg-gray-200 hover:bg-gray-300' }}
+                            {{ $category->users->contains(auth()->id()) ? 'text-white bg-indigo-600 hover:bg-indigo-700' : 'bg-gray-200 hover:bg-gray-300' }}
                             ">
-                                {{ $category->users->pluck('id')->contains(auth()->id()) ? 'Following' : 'Follow' }}
+                                {{ $category->users->contains(auth()->id()) ? 'Following' : 'Follow' }}
                         </button>    
                     </form>
                 </div>

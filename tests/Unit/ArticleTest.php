@@ -25,4 +25,12 @@ class ArticleTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $article->categories);
     }
+
+    // many to many
+    public function test_article_can_be_saved_by_many_users()
+    {
+        $article = Article::factory()->create();
+
+        $this->assertInstanceOf(Collection::class, $article->users);
+    }
 }

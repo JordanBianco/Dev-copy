@@ -2,17 +2,36 @@
 
 namespace Tests\Feature;
 
+use App\Models\Article;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-   use RefreshDatabase;
-
-    public function test_example()
+    use RefreshDatabase;
+   
+    public function test_user_can_view_articles_in_saved()
     {
-        $response = $this->get('/');
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-        $response->assertStatus(200);
+        $article = Article::factory()->create();
+        $this->post(route('saved.store', $article->id));
+
+        $this->get(route('dashboard.saved'))
+            ->assertSee($user->savedArticles->first()->title);
+    }
+
+    public function test_user_can_save_articles_in_saved_list()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $article = Article::factory()->create();
+
+        $this->post(route('saved.store', $article->id));
+
+        $this->assertEquals(1, $user->savedArticles->count());
     }
 }

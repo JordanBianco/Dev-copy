@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FollowCategory;
+use App\Http\Controllers\SavedArticlesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +23,13 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::prefix('dashboard')->group(function() {
-        Route::view('/', 'user.dashboard.index')->name('dashboard.index');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::view('/following_categories', 'user.dashboard.following_categories')->name('dashboard.following_categories');
+        Route::get('/saved', [SavedArticlesController::class, 'index'])->name('dashboard.saved');
     });
+
+    // SavedForLater
+    Route::post('/save/{article:id}', [SavedArticlesController::class, 'store'])->name('saved.store');
 
     // Articles
     Route::get('/new', [ArticleController::class, 'create'])->name('article.create');
@@ -31,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Follow
     Route::post('/c/{category:name}/follow', [FollowCategory::class, 'store'])->name('category.follow');
+
 });
 
 // Category

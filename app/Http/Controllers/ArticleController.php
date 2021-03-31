@@ -26,6 +26,9 @@ class ArticleController extends Controller
     
     public function show(User $user, Article $article)
     {
+        $article->views_count = $article->views_count + 1;
+        $article->save();
+        
         return view('article.show', compact(['user', 'article']));
     }
 

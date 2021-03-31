@@ -48,6 +48,16 @@
                                     </span>
                                 </a>
                             </li>
+
+                            {{-- Reading List --}}
+                            <li>
+                                <a href="{{ route('dashboard.saved') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('dashboard/saved') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
+                                    <span class="{{ request()->is('dashboard/saved') ? 'font-bold' : '' }}">Reading List</span>
+                                    <span class="bg-gray-300 font-semibold text-xs rounded p-1">
+                                        {{ auth()->user()->savedArticles->count() }}
+                                    </span>
+                                </a>
+                            </li>
                             
                         </ul>
                     </div>

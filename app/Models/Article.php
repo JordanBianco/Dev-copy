@@ -30,4 +30,9 @@ class Article extends Model
     {
         return $this->belongsToMany(Category::class, 'article_category')->withTimestamps();
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'article_user')->withTimestamps();
+    }
 }
