@@ -1,12 +1,10 @@
-<x-app-layout>
-    <div>
-        <h2 class="font-bold text-3xl">Top Categories</h2>
+<x-dashboard-layout>
+    <div class="bg-white p-6">
+        <div class="space-y-3">
 
-        <section class="my-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            @forelse (auth()->user()->categories as $category)
 
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-
-                @foreach ($categories as $category)
                 <div class="shadow rounded-lg bg-white relative">
                     <div class="bg-red-400 rounded-t-lg py-2"></div>
 
@@ -14,11 +12,11 @@
                         <a href="{{ route('category.show', $category->name) }}" class="font-bold text-lg hover:text-blue-800 transition duration-300">
                             #{{ $category->name }}
                         </a>
-    
+
                         <p class="mt-4 mb-2">
                             {{ $category->description }}
                         </p>
-    
+
                         <span class="text-sm text-gray-500">{{ $category->articles_count }} posts published</span>    
                     </div>
 
@@ -33,10 +31,24 @@
                         </button>    
                     </form>
                 </div>
-                @endforeach
 
+            @empty
+
+                <div class="flex justify-center">
+                    <div>
+                        <p class="text-lg mb-2">
+                            This is where you can manage your posts, but you haven't written anything yet.
+                        </p>
+                        <a href="{{ route('article.create') }}" class="block text-center">
+                            <button class="bg-gray-900 hover:bg-black text-white rounded p-2 px-3 max-w-max">
+                                Write a post
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            @endforelse
             </div>
-
-        </section>
+        </div>
     </div>
-</x-app-layout>
+</x-dashboard-layout>

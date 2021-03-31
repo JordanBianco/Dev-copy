@@ -10,9 +10,17 @@
                     <p class="mt-4">{{ $category->description }}</p>
                 </div>
 
-                <button class="bg-indigo-600 hover:bg-indigo-700 transtion duration-300 text-sm px-4 text-white py-2 rounded focus:outline-none">
-                    Follow
-                </button>
+                <form action="{{ route('category.follow', $category->name) }}" method="POST">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="transtion duration-300 text-sm px-4 py-2 rounded focus:outline-none
+                        {{ $category->users->pluck('id')->contains(auth()->id()) ? 'bg-gray-100 text-gray-800 border border-indigo-700' : 'text-white bg-indigo-600 hover:bg-indigo-700' }}
+                        ">
+                            {{ $category->users->pluck('id')->contains(auth()->id()) ? 'Following' : 'Follow' }}
+                    </button>   
+                </form>
+                
 
             </div>
         </header>
@@ -36,7 +44,7 @@
 
             </div>
 
-            <div class="w-full">
+            <div class="w-full space-y-3">
                 @foreach ($articles as $article)
                     @include('inc.single-article')
                 @endforeach

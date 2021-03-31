@@ -32,6 +32,8 @@ class ArticleFactory extends Factory
             'title' => $title,
             'slug' => $slug,
             'body' => $this->faker->paragraph(10),
+            'views_count' => 0,
+            'published' => false,
         ];
     }
 }

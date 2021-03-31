@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -45,5 +46,21 @@ class CategoryTest extends TestCase
             ->assertSee($category->title)
             ->assertSee($category->description)
             ->assertSee($article->title);
+    }
+
+    public function test_category_can_be_followed_by_user()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $category = Category::factory()->create();
+        $article = Article::factory()->create();
+        $category->articles()->attach($article->id);
+
+        $this->assertEquals(1, $category->articles->count());
+
+        $this->post(route('category.follow', $category->name));
+
+        $this->assertEquals(1, $category->users->count());
     }
 }

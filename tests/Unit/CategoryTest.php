@@ -17,4 +17,11 @@ class CategoryTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $category->articles);
     }
+
+    public function test_a_category_can_be_followed_by_multiple_users()
+    {
+        $category = Category::factory()->create();
+
+        $this->assertInstanceOf(Collection::class, $category->users);
+    }
 }

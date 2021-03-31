@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FollowCategory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,16 +16,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 require __DIR__.'/auth.php';
-Route::get('/c/{category:name}', [CategoryController::class, 'show'])->name('category.show');
-// Articles
-Route::get('/', [ArticleController::class, 'index'])->name('article.index');
-Route::get('/{user:name}/{article:slug}', [ArticleController::class, 'show'])->name('article.show');
+
+Route::middleware(['auth'])->group(function () {
+    // Dashboard
+    Route::prefix('dashboard')->group(function() {
+        Route::view('/', 'user.dashboard.index')->name('dashboard.index');
+        Route::view('/following_categories', 'user.dashboard.following_categories')->name('dashboard.following_categories');
+    });
+
+    // Articles
+    Route::get('/new', [ArticleController::class, 'create'])->name('article.create');
+    Route::post('/', [ArticleController::class, 'store'])->name('article.store');
+
+    // Follow
+    Route::post('/c/{category:name}/follow', [FollowCategory::class, 'store'])->name('category.follow');
+});
 
 // Category
 Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/c/{category:name}', [CategoryController::class, 'show'])->name('category.show');
 
+// Articles
+Route::get('/', [ArticleController::class, 'index'])->name('article.index');
+Route::get('/{user:name}/{article:slug}', [ArticleController::class, 'show'])->name('article.show');

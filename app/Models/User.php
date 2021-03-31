@@ -11,6 +11,15 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($user) {
+            $user->profile()->create();
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,5 +53,15 @@ class User extends Authenticatable
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+    
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_user')->withTimestamps();
     }
 }

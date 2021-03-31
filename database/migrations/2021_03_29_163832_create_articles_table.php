@@ -17,8 +17,10 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('title')->unique();
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->longText('body');
+            $table->unsignedBigInteger('views_count')->default(0);
+            $table->boolean('published')->default(0);
             $table->timestamps();
         });
     }

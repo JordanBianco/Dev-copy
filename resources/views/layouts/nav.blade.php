@@ -19,14 +19,35 @@
     {{-- Right Side --}}
     <div class="flex items-center space-x-1 md:space-x-3">
 
+        @guest
         <a href="{{ route('login') }}" class="font-semibold text-indigo-700 hover:bg-gray-50 px-3 py-2">Log in</a>
 
-        <button class="bg-indigo-700 hover:bg-indigo-800 text-white rounded p-2 px-3 font-semibold max-w-max">
-            <a href="{{ route('register') }}">
+        
+        <a href="{{ route('register') }}">
+            <button class="bg-indigo-700 hover:bg-indigo-800 text-white rounded p-2 px-3 font-semibold max-w-max">
                 Create Account
-            </a>
-        </button>
+            </button>
+        </a>
+        @else
+        <a href="{{ route('article.create') }}">
+            <button class="bg-gray-900 hover:bg-black text-white rounded p-2 px-3 max-w-max">
+                Write a post
+            </button>
+        </a>
 
+        <a href="{{ route('dashboard.index') }}">
+            <div class="flex-shrink-0">
+                <img src="https://eu.ui-avatars.com/api/?name="{{ auth()->user()->name }}" alt="user_avatar" class="rounded-full w-10 h-10">
+            </div>
+        </a>
+
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit">Logout</button>
+        </form>
+        @endguest
+        
+        
     </div>
 
 </nav>

@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -30,5 +32,58 @@ class ArticleTest extends TestCase
             ->assertSee($article->body)
             ->assertSee($article->author->name)
             ->assertSee($article->author->created_at->format('d M Y'));
+    }
+
+    public function test_auth_user_can_write_articles()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $this->get(route('article.create'))->assertStatus(200);
+     
+        $article = [
+            'user_id' => $user->id,
+            'title' => 'new title',
+            'body' => 'new body',
+        ];
+
+        $this->post(route('article.store'), $article);
+
+        $this->assertDatabaseHas('articles', $article);
+        // $this->assertEquals(1, $user->articles->count());
+    }
+
+    public function test_title_is_required()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $article = [
+            'user_id' => $user->id,
+            'title' => '',
+            'body' => 'new body',
+        ];
+
+        $this->post(route('article.store'), $article)
+            ->assertSessionHasErrors('title');
+        
+        $this->assertDatabaseMissing('articles', $article);
+    }
+
+    public function test_body_is_required()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $article = [
+            'user_id' => $user->id,
+            'title' => 'title',
+            'body' => '',
+        ];
+
+        $this->post(route('article.store'), $article)
+            ->assertSessionHasErrors('body');
+        
+        $this->assertDatabaseMissing('articles', $article);
     }
 }

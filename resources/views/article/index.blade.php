@@ -15,12 +15,12 @@
 
                 <div class="flex flex-col space-y-2">
 
-                    <button class="bg-indigo-700 hover:bg-indigo-800 text-white rounded py-2 px-3 font-semibold w-full">
-                        <a href="{{ route('register') }}">
+                    <a href="{{ route('register') }}">
+                        <button class="bg-indigo-700 hover:bg-indigo-800 text-white rounded py-2 px-3 font-semibold w-full">
                             Create Account
-                        </a>
-                    </button>
-
+                        </button>
+                    </a>
+                    
                     <a href="{{ route('login') }}" class="font-semibold text-indigo-700 w-full text-center hover:bg-gray-50 px-3 py-1">Log in</a>
                 </div>
             </div>                
@@ -35,7 +35,7 @@
     
                 <a href="{{ route('category.index') }}" class="flex items-center space-x-2 hover:bg-gray-200 rounded p-2 hover:text-blue-800 transition duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-                    <span>Tags</span>
+                    <span>Categories</span>
                 </a>
             </div>
         
@@ -53,6 +53,16 @@
             </ul>
             @else 
             <h4 class="font-bold my-4">My Categories</h4>
+
+            <ul class="h-64 overflow-y-auto">
+                @foreach (auth()->user()->categories as $category)
+                    <a href="{{ route('category.show', $category->name) }}">
+                        <li class="text-gray-600 hover:bg-gray-200 rounded p-2 hover:text-blue-800 transition duration-300">
+                            #{{ $category->name }}
+                        </li>
+                    </a>
+                @endforeach
+            </ul>
 
             @endguest
         </div>
