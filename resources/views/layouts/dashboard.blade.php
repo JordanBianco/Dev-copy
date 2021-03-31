@@ -24,6 +24,21 @@
             <div class="px-6 py-4">
                 <h2 class="font-bold text-3xl">Dashboard</h2>
 
+                @if (request()->is('dashboard'))
+                <div class="grid grid-cols-4 gap-x-6 my-6">
+                    <div class="border border-gray-200 rounded shadow bg-white p-6 px-8">
+                        <span class="block font-bold text-2xl">0</span>
+                        <p>Total article reactions</p>
+                    </div>
+
+                    <div class="border border-gray-200 rounded shadow bg-white p-6 px-8">
+                        <span class="block font-bold text-2xl">< 500</span>
+                        <p>Total article views</p>
+                    </div>
+                </div>
+                @endif
+            
+
                 <!-- Page Content -->
                 <main class="mt-4 flex items-start space-x-4">
     

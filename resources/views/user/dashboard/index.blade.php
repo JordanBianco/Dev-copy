@@ -1,5 +1,6 @@
 <x-dashboard-layout>
     <div class="bg-white p-6">
+
         <div class="space-y-3">
             @forelse ($articles as $article)
                 <div class="shadow rounded bg-white p-4 flex items-start space-x-4">
