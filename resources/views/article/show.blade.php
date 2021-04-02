@@ -7,18 +7,27 @@
 
                 {{-- Heart --}}
                 <div class="space-y-1 max-w-max">
-                    <div title="Heart" class="p-2 rounded-full text-gray-600 hover:text-red-600 hover:bg-red-100 transition duration-300 cursor-pointer">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                    </div>
-                    <span class="block text-sm text-center text-gray-600">14</span>
+                    <form action="{{ route('article.like.store', $article->id) }}" method="POST">
+                        @csrf
+                        
+                        <button type="submit" title="Heart" class="focus:outline-none p-2 rounded-full text-gray-600 hover:text-red-600 hover:bg-red-100 transition duration-300 cursor-pointer">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        </button>
+
+                    </form>
+                    <span class="block text-sm text-center text-gray-600">{{$article->likes->count()}}</span>
                 </div>
 
                 {{-- Saved --}}
                 <div class="space-y-1 max-w-max">
-                    <div title="Saved" class="p-2 rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-100 transition duration-300 cursor-pointer">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
-                    </div>
-                    <span class="block text-sm text-center text-gray-600">10</span>
+                    <form action="{{ route('saved.store', $article->id) }}" method="POST">
+                            
+                        @csrf
+                        <button type="submit" title="Saved" class="focus:outline-none p-2 rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-100 transition duration-300 cursor-pointer">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                        </button>
+                    </form>
+                    <span class="block text-sm text-center text-gray-600">{{$article->users->count()}}</span>
                 </div>
 
             </div>

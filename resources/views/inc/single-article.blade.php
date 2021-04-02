@@ -1,4 +1,4 @@
-<div class="shadow rounded bg-white p-4 flex items-start space-x-4">
+<div class="shadow-sm border border-gray-100 rounded bg-white p-4 flex items-start space-x-4">
 
     <div class="flex-shrink-0">
         <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->name }}" alt="user_avatar" class="rounded-full w-10 h-10">
@@ -29,7 +29,7 @@
 
                     <div class="flex items-center space-x-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                        <span>7 reactions</span>
+                        <span>{{ $article->likes_count + $article->users_count }} reactions</span>
                     </div>
 
                     <div class="flex items-center space-x-2">

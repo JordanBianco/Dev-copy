@@ -21,6 +21,11 @@ class Article extends Model
         });
     }
 
+    public function reactions()
+    {
+        return $this->likes()->count() + $this->users()->count();
+    }
+
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -34,5 +39,10 @@ class Article extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'article_user')->withTimestamps();
+    }
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
     }
 }

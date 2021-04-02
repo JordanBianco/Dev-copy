@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\User;
 use App\Models\Article;
+use App\Models\Like;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -32,5 +33,12 @@ class ArticleTest extends TestCase
         $article = Article::factory()->create();
 
         $this->assertInstanceOf(Collection::class, $article->users);
+    }
+
+    public function test_article_can_have_many_likes()
+    {
+        $article = Article::factory()->create();
+
+        $this->assertInstanceOf(Collection::class, $article->likes);
     }
 }

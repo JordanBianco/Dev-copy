@@ -13,6 +13,7 @@ class ArticleController extends Controller
     {
         $articles = Article::with('author')
             ->with('categories')
+            ->withCount(['likes', 'users'])
             ->latest()
             ->get();
         
@@ -28,8 +29,11 @@ class ArticleController extends Controller
     {
         $article->views_count = $article->views_count + 1;
         $article->save();
-        
-        return view('article.show', compact(['user', 'article']));
+
+        return view('article.show', [
+            'user' => $user,
+            'article' => $article->load(['likes', 'users'])
+        ]);
     }
 
     public function create()

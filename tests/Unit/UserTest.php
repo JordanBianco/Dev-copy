@@ -41,4 +41,12 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->savedArticles);
     }
+
+    // many to many
+    public function test_user_can_likes_many_articles()
+    {
+        $user = User::factory()->create();
+
+        $this->assertInstanceOf(Collection::class, $user->likes);
+    }
 }

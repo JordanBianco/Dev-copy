@@ -4,7 +4,9 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FollowCategory;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\SavedArticlesController;
+use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +39,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Follow
     Route::post('/c/{category:name}/follow', [FollowCategory::class, 'store'])->name('category.follow');
+
+    // Likes
+    Route::post('/article/{article:id}/like', [LikeController::class, 'store'])->name('article.like.store');
 
 });
 

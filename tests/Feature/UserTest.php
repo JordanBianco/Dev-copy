@@ -34,4 +34,16 @@ class UserTest extends TestCase
 
         $this->assertEquals(1, $user->savedArticles->count());
     }
+
+    public function test_user_can_like_an_article()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $article = Article::factory()->create();
+
+        $this->post(route('article.like.store', $article->id));
+
+        $this->assertEquals(1, $user->likes->count());
+    }
 }
