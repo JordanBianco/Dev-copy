@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewArticleCreated;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ArticleController extends Controller
 {
@@ -58,6 +60,9 @@ class ArticleController extends Controller
         ]);
 
         $article->categories()->attach($request->categories);
+
+        Mail::to($article->author->email)
+            ->send(new NewArticleCreated($article));
 
         return redirect()->route('dashboard.index');
     }

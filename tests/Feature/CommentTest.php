@@ -63,8 +63,6 @@ class CommentTest extends TestCase
 
     public function test_author_can_delete_a_comment()
     {
-        $this->withoutExceptionHandling();
-
         $user = User::factory()->create();
         $this->actingAs($user);
 
@@ -165,8 +163,6 @@ class CommentTest extends TestCase
 
     public function test_a_comment_can_have_many_replies()
     {
-        $this->withoutExceptionHandling();
-
         $user = User::factory()->create();
         $this->actingAs($user);
 
@@ -186,5 +182,30 @@ class CommentTest extends TestCase
         ]);
 
         $this->assertEquals(1, $comment->comments->count());
+    }
+
+    public function test_likes_and_replies_associated_to_a_comment_gets_deleted_when_the_comment_gets_deleted()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $comment = Comment::factory()->create(['user_id' => $user->id]);
+
+        $comment->likes()->create([
+            'user_id' => $user->id
+        ]);
+
+        $comment->comments()->create([
+            'user_id' => $user->id,
+            'body' => 'Reply body'
+        ]);
+
+        $this->assertEquals(1, $comment->likes()->count());
+        $this->assertEquals(1, $comment->comments()->count());
+
+        $this->delete(route('article.comment.destroy', [$comment->commentable_id, $comment->id]));
+
+        $this->assertEquals(0, $comment->likes()->count());
+        $this->assertEquals(0, $comment->comments()->count());
     }
 }
