@@ -34,18 +34,25 @@
                 
                                     <div class="flex items-center space-x-2">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                                        <span>7 reactions</span>
+                                        <span>{{ $article->likes_count + $article->users_count }} reactions</span>
                                     </div>
                 
                                     <div class="flex items-center space-x-2">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                                        {{-- If ! 0 comments -- 3 comments  --}}
-                                        <span>Add comment</span> 
+                                        <span>{{ $article->comments_count === 0 ? 'Add comment' :  $article->comments_count . ' comments' }}</span> 
                                     </div>
                                     
                                 </div>
                 
-                                <div>
+                                <div class="flex items-center space-x-4">
+                                    <form action="{{ route('article.destroy', $article->id) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="uppercase text-gray-500 hover:text-red-600 transition duration-200 text-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+
                                     <span class="text-gray-600 text-xs">{{ readingTime($article->body) }} min read</span>
                                 </div>
                             </div>
@@ -57,11 +64,11 @@
             <div class="flex justify-center">
                 <div>
                     <p class="text-lg mb-2">
-                        This is where you can manage your posts, but you haven't written anything yet.
+                        This is where you can manage your articles, but you haven't written anything yet.
                     </p>
                     <a href="{{ route('article.create') }}" class="block text-center">
                         <button class="bg-gray-900 hover:bg-black text-white rounded p-2 px-3 max-w-max">
-                            Write a post
+                            Write an article
                         </button>
                     </a>
                 </div>

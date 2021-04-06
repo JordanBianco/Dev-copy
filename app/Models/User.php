@@ -50,6 +50,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function hasSaved($id)
+    {
+        return $this->savedArticles->contains($id);
+    }
+
     public function articles()
     {
         return $this->hasMany(Article::class)->latest();
@@ -73,5 +78,10 @@ class User extends Authenticatable
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

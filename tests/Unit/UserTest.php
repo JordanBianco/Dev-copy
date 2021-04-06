@@ -49,4 +49,11 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->likes);
     }
+
+    public function test_user_can_post_many_comments()
+    {
+        $user = User::factory()->create();
+
+        $this->assertInstanceOf(Collection::class, $user->comments);
+    }
 }

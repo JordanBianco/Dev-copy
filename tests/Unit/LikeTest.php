@@ -12,16 +12,10 @@ class LikeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_an_article_can_be_liked()
+    public function test_a_like_belongs_to_user()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+       Like::factory()->create();
 
-        $article = Article::factory()->create();
-
-        $this->post(route('article.like.store', $article->id));
-
-        $this->assertEquals(get_class($article), Like::first()->likeable_type);
-        $this->assertEquals($article->id, Like::first()->likeable_id);
+        $this->assertInstanceOf(User::class, Like::first()->author);
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -116,5 +117,60 @@ class ArticleTest extends TestCase
         $this->get(route('article.show', [$article->author->name, $article->slug]))->assertOk();
         
         $this->assertEquals(1, $article->refresh()->views_count);
+    }
+
+    public function test_article_author_can_delete_it()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $article = Article::factory()->create(['user_id' => $user->id]);
+
+        $this->delete(route('article.destroy', $article->id));
+
+        $this->assertDatabaseMissing('articles', $article->only('id'));
+    }
+
+    public function test_article_author_can_delete_only_its_own_articles()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $user2 = User::factory()->create();
+
+        $article = Article::factory()->create(['user_id' => $user2->id]);
+
+        $this->delete(route('article.destroy', $article->id))->assertForbidden();
+
+        $this->assertDatabaseHas('articles', $article->only('id'));
+    }
+
+    public function test_likes_and_comments_associated_to_an_article_gets_deleted_when_the_article_gets_deleted()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $article = Article::factory()->create(['user_id' => $user->id]);
+
+        $article->comments()->create([
+            'user_id' => $user->id,
+            'commentable_type' => get_class($article),
+            'commentable_id' => $article->id,
+            'body' => 'body',
+        ]);
+
+        $article->likes()->create([
+            'user_id' => $user->id,
+            'likeable_type' => get_class($article),
+            'likeable_id' => $article->id,
+        ]);
+
+        $this->assertEquals(1, $article->comments()->count());
+        $this->assertEquals(1, $article->likes()->count());
+
+        $this->delete(route('article.destroy', $article->id));
+
+        $this->assertEquals(0, $article->comments()->count());
+        $this->assertEquals(0, $article->likes()->count());
     }
 }

@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Likeable;
 
-class Like extends Model
+class Comment extends Model
 {
-    protected $table = 'likes';
-
-    use HasFactory;
+    use HasFactory, Likeable;
 
     protected $guarded = [];
 
-    public function likeable()
+    protected $with = ['author'];
+
+    public function commentable()
     {
         return $this->morphTo();
     }
@@ -21,5 +22,11 @@ class Like extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Testare
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

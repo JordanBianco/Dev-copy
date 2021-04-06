@@ -11,6 +11,7 @@ class DashboardController extends Controller
     {
         $articles = Article::where('user_id', auth()->id())
                         ->with('categories')
+                        ->withCount(['likes', 'users', 'comments'])
                         ->latest()
                         ->get();
 

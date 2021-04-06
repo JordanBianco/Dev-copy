@@ -17,13 +17,13 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-50">
 
-        @include('layouts.nav')
-
-        <!-- Page Content -->
-        <main class="font-sans text-gray-900 bg-gray-50 antialiased p-10 min-h-screen">
-            {{ $slot }}
-        </main>
-
+            <!-- Page Content -->
+            <main class="px-6 py-4">
+                {{ $slot }}
+            </main>
+            
+        </div>
     </body>
 </html>

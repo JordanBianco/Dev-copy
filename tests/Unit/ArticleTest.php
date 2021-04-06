@@ -41,4 +41,11 @@ class ArticleTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $article->likes);
     }
+
+    public function test_article_can_have_many_comments()
+    {
+        $article = Article::factory()->create();
+
+        $this->assertInstanceOf(Collection::class, $article->comments);
+    }
 }

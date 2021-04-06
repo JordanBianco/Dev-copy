@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FollowCategory;
-use App\Http\Controllers\LikeController;
+use App\Http\Controllers\ArticleLikeController;
+use App\Http\Controllers\CommentLikeController;
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\SavedArticlesController;
-use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->group(function () {
+    
     // Dashboard
     Route::prefix('dashboard')->group(function() {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -36,13 +39,24 @@ Route::middleware(['auth'])->group(function () {
     // Articles
     Route::get('/new', [ArticleController::class, 'create'])->name('article.create');
     Route::post('/', [ArticleController::class, 'store'])->name('article.store');
+    Route::delete('article/{article:id}', [ArticleController::class, 'destroy'])->name('article.destroy');
 
     // Follow
     Route::post('/c/{category:name}/follow', [FollowCategory::class, 'store'])->name('category.follow');
 
     // Likes
-    Route::post('/article/{article:id}/like', [LikeController::class, 'store'])->name('article.like.store');
+    Route::post('/article/{article:id}/like', [ArticleLikeController::class, 'store'])->name('article.like.store');
+    Route::post('/comment/{comment:id}/like', [CommentLikeController::class, 'store'])->name('comment.like.store');
 
+    // Comment
+    Route::get('/article/{article:slug}/comment/{comment:id}', [CommentController::class, 'edit'])->name('article.comment.edit');
+    Route::patch('/article/{article:id}/comment/{comment:id}', [CommentController::class, 'update'])->name('article.comment.update');
+    Route::post('/article/{article:id}/comment', [CommentController::class, 'store'])->name('article.comment.store');
+    Route::delete('/article/{article:id}/comment/{comment:id}', [CommentController::class, 'destroy'])->name('article.comment.destroy');
+
+    // Replies
+    Route::get('/article/{article:slug}/comment/{comment:id}/reply', [ReplyController::class, 'create'])->name('comment.reply.create');
+    Route::post('/article/{article:slug}/comment/{comment:id}/reply', [ReplyController::class, 'store'])->name('comment.reply.store');
 });
 
 // Category

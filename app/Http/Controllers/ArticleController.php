@@ -13,16 +13,16 @@ class ArticleController extends Controller
     {
         $articles = Article::with('author')
             ->with('categories')
-            ->withCount(['likes', 'users'])
+            ->withCount(['likes', 'users', 'comments'])
             ->latest()
-            ->get();
+            ->paginate(20);
         
         // categorie con più articoli
         $categories = Category::withCount('articles')
             ->orderBy('articles_count', 'desc')
             ->get();
 
-        return view('article.index', compact(['articles', 'categories']));
+        return view('article.index', compact('articles', 'categories'));
     }
     
     public function show(User $user, Article $article)
@@ -30,10 +30,11 @@ class ArticleController extends Controller
         $article->views_count = $article->views_count + 1;
         $article->save();
 
-        return view('article.show', [
-            'user' => $user,
-            'article' => $article->load(['likes', 'users'])
-        ]);
+        $article = Article::where('id', $article->id)
+            ->with('likes', 'users', 'comments')
+            ->first();
+
+        return view('article.show', compact('article'));
     }
 
     public function create()
@@ -59,5 +60,14 @@ class ArticleController extends Controller
         $article->categories()->attach($request->categories);
 
         return redirect()->route('dashboard.index');
+    }
+
+    public function destroy(Article $article)
+    {
+        abort_if(auth()->id() !== $article->author->id, 403);
+
+        $article->delete();
+
+        return back();
     }
 }

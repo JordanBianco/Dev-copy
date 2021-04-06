@@ -1,5 +1,4 @@
-<x-app-layout>
-
+<x-guest-layout>
     <div class="flex items-start space-x-4">
         
         <div class="w-1/3">
@@ -76,6 +75,10 @@
             @foreach ($articles as $article)
                 @include('inc.single-article')
             @endforeach
+
+            <div class="mt-10">
+                {{ $articles->links() }}
+            </div>
         </div>
 
         {{-- Right side --}}
@@ -85,4 +88,4 @@
     </div>
 
     
-</x-app-layout>
+</x-guest-layout>

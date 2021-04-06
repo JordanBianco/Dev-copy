@@ -14,9 +14,9 @@ class SavedArticlesController extends Controller
     }
 
     public function store(Article $article)
-    {        
+    {
         auth()->user()->savedArticles()->toggle($article->id);
-        
+
         return redirect()->back();
     }
 }

@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Traits\Likeable;
 
 class Article extends Model
 {
-    use HasFactory;
+    use HasFactory, Likeable;
 
     protected $guarded = [];
 
@@ -19,11 +20,6 @@ class Article extends Model
         static::creating(function($article) {
             $article->slug = Str::slug($article->title);
         });
-    }
-
-    public function reactions()
-    {
-        return $this->likes()->count() + $this->users()->count();
     }
 
     public function author()
@@ -41,8 +37,9 @@ class Article extends Model
         return $this->belongsToMany(User::class, 'article_user')->withTimestamps();
     }
 
-    public function likes()
+    // Trait Comment -> ? forse non necessario
+    public function comments()
     {
-        return $this->morphMany(Like::class, 'likeable');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

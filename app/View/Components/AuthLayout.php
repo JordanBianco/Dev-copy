@@ -2,10 +2,9 @@
 
 namespace App\View\Components;
 
-use App\Models\Category;
 use Illuminate\View\Component;
 
-class GuestLayout extends Component
+class AuthLayout extends Component
 {
     /**
      * Get the view / contents that represents the component.
@@ -14,6 +13,6 @@ class GuestLayout extends Component
      */
     public function render()
     {
-        return view('layouts.guest');
+        return view('layouts.auth');
     }
 }
