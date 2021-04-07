@@ -1,14 +1,19 @@
 <div class="flex items-start space-x-1 my-6">
 
     <div class="flex-shrink-0 mt-2">
-        <img src="https://eu.ui-avatars.com/api/?name="{{ $comment->author->name }}" alt="user_avatar" class="rounded-full w-8 h-8">
+        <a href="{{ route('user.profile', $article->author->username) }}">
+            <img src="https://eu.ui-avatars.com/api/?name="{{ $comment->author->name }}" alt="user_avatar" class="rounded-full w-8 h-8">
+        </a>
     </div>
 
     <div class="w-full">
         <section class="rounded border border-gray-100 shadow-sm px-3 py-4">
             <header class="flex items-center space-x-2">
 
-                <span class="font-bold">{{ $comment->author->name }}</span>
+                <a href="{{ route('user.profile', $article->author->username) }}">
+                    <span class="font-bold">{{ $comment->author->name }}</span>
+                </a>
+
                 @if ($article->author->id === $comment->author->id)
                 <div title="author" class="bg-indigo-800 w-2 h-2 rounded-full"></div>
                 @endif

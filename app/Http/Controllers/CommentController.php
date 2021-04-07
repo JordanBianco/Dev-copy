@@ -42,7 +42,7 @@ class CommentController extends Controller
             'body' => $request->body
         ]);
 
-        return redirect()->route('article.show', [$article->author->name, $article->slug]);   
+        return redirect()->route('article.show', [$article->author->username, $article->slug]);   
     }
 
     public function destroy(Article $article, Comment $comment)
@@ -51,6 +51,6 @@ class CommentController extends Controller
         
         $comment->delete();
 
-        return redirect()->route('article.show', [$article->author->name, $article->slug]);
+        return redirect()->route('article.show', [$article->author->username, $article->slug]);
     }
 }

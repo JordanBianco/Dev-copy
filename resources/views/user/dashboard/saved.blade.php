@@ -11,16 +11,16 @@
                     <div class="flex items-start space-x-4">
 
                         <div class="flex-shrink-0 -mt-1">
-                            <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->name }}" alt="user_avatar" class="rounded-full w-8 h-8">
+                            <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->username }}" alt="user_avatar" class="rounded-full w-8 h-8">
                         </div>
 
                         <div>
-                            <a href="{{ route('article.show', [$article->author->name, $article->slug]) }}">
+                            <a href="{{ route('article.show', [$article->author->username, $article->slug]) }}">
                                 <h2 class="font-bold text-xl">{{ $article->title }}</h2>
                             </a>
 
                             <div class="flex items-center space-x-1 mt-1">
-                                <h3 class="font-bold text-sm">{{ $article->author->name }}</h3>
+                                <h3 class="font-bold text-sm">{{ $article->author->username }}</h3>
 
                                 <span class="text-gray-400 text-xs">&bull;</span>
 

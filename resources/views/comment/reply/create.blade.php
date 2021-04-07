@@ -27,7 +27,7 @@
                     @enderror
         
                 <div class="flex items-center space-x-4 mt-4">
-                    <a href="{{ route('article.show', [$article->author->name, $article->slug]) }}" class="border-gray-400 border hover:border-gray-500 text-gray-600 rounded p-2 px-3 max-w-max">
+                    <a href="{{ route('article.show', [$article->author->username, $article->slug]) }}" class="border-gray-400 border hover:border-gray-500 text-gray-600 rounded p-2 px-3 max-w-max">
                         Back
                     </a>
 

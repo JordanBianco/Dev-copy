@@ -3,7 +3,7 @@
 
         <div class="space-y-3">
             @forelse ($articles as $article)
-                <div class="shadow rounded bg-white p-4 flex items-start space-x-4">
+                <div class="shadow-sm border border-gray-200 rounded bg-white p-4 flex items-start space-x-4">
 
                     <div class="flex-shrink-0">
                         <img src="https://eu.ui-avatars.com/api/?name="{{ auth()->user()->name }}" alt="user_avatar" class="rounded-full w-10 h-10">

@@ -56,7 +56,7 @@
                 <ul>
                     @foreach ($latestArticles as $article)
                         <li class="hover:bg-gray-50 p-4 hover:text-blue-800 space-y-2 cursor-pointer">
-                            <a href="{{ route('article.show', [$article->author->name, $article->slug]) }}">
+                            <a href="{{ route('article.show', [$article->author->username, $article->slug]) }}">
                                 {{ $article->title }}
                             </a>
 

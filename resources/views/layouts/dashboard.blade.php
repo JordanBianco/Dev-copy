@@ -22,7 +22,13 @@
             @include('layouts.nav')
 
             <div class="px-6 py-4">
-                <h2 class="font-bold text-3xl">Dashboard</h2>
+                <div class="flex items-center justify-between">
+                    <h2 class="font-bold text-3xl">Dashboard</h2>
+
+                    <a href="{{ route('user.profile', auth()->user()->username) }}" class="text-gray-500 hover:text-gray-700">
+                        <h3>{{ '@' . auth()->user()->username  }}</h3>
+                    </a>
+                </div>
 
                 @if (request()->is('dashboard'))
                 <div class="grid grid-cols-4 gap-x-6 my-6">
@@ -40,7 +46,7 @@
             
 
                 <!-- Page Content -->
-                <main class="mt-4 flex items-start space-x-4">
+                <main class="mt-8 flex items-start space-x-4">
     
                     <div class="w-1/5">
                         <ul>
@@ -71,6 +77,33 @@
                                     <span class="bg-gray-300 font-semibold text-xs rounded p-1">
                                         {{ auth()->user()->savedArticles->count() }}
                                     </span>
+                                </a>
+                            </li>
+
+                            {{-- Followers --}}
+                            <li>
+                                <a href="{{ route('dashboard.saved') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('dashboard/saved') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
+                                    <span class="{{ request()->is('dashboard/saved') ? 'font-bold' : '' }}">Followers</span>
+                                    <span class="bg-gray-300 font-semibold text-xs rounded p-1">
+                                        0
+                                    </span>
+                                </a>
+                            </li>
+
+                            {{-- Following Users --}}
+                            <li>
+                                <a href="{{ route('dashboard.saved') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('dashboard/saved') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
+                                    <span class="{{ request()->is('dashboard/saved') ? 'font-bold' : '' }}">Following Users</span>
+                                    <span class="bg-gray-300 font-semibold text-xs rounded p-1">
+                                        0
+                                    </span>
+                                </a>
+                            </li>
+
+                            {{-- Settings --}}
+                            <li>
+                                <a href="{{ route('user.profile.settings') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('/settings') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
+                                    <span class="{{ request()->is('/settings') ? 'font-bold' : '' }}">Settings</span>
                                 </a>
                             </li>
                             

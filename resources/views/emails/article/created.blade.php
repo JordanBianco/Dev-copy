@@ -5,7 +5,7 @@ Hai creato un articolo.
 "{{ $article->title }}"
 Per visualizzarlo clicca sul bottone..
 
-@component('mail::button', ['url' => 'http://blogadmin.test/' . $article->author->name . '/' . $article->slug])
+@component('mail::button', ['url' => 'http://blogadmin.test/' . $article->author->username . '/' . $article->slug])
 Vai al tuo articolo
 @endcomponent
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FollowCategory;
 use App\Http\Controllers\ArticleLikeController;
 use App\Http\Controllers\CommentLikeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\SavedArticlesController;
 use Illuminate\Support\Facades\Route;
@@ -57,7 +58,15 @@ Route::middleware(['auth'])->group(function () {
     // Replies
     Route::get('/article/{article:slug}/comment/{comment:id}/reply', [ReplyController::class, 'create'])->name('comment.reply.create');
     Route::post('/article/{article:slug}/comment/{comment:id}/reply', [ReplyController::class, 'store'])->name('comment.reply.store');
+
+    // Profile
+    Route::get('/settings', [ProfileController::class, 'edit'])->name('user.settings.profile.edit');
+    Route::patch('/settings/user', [ProfileController::class, 'update'])->name('user.settings.update');
+    Route::patch('/settings/user/profile', [ProfileController::class, 'updateProfile'])->name('user.settings.update-profile');
 });
+
+// Profile
+Route::get('/{user:username}', [ProfileController::class, 'index'])->name('user.profile');
 
 // Category
 Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
@@ -65,4 +74,4 @@ Route::get('/c/{category:name}', [CategoryController::class, 'show'])->name('cat
 
 // Articles
 Route::get('/', [ArticleController::class, 'index'])->name('article.index');
-Route::get('/{user:name}/{article:slug}', [ArticleController::class, 'show'])->name('article.show');
+Route::get('/{user:username}/{article:slug}', [ArticleController::class, 'show'])->name('article.show');

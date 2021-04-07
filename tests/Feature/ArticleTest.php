@@ -27,20 +27,20 @@ class ArticleTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $this->get(route('article.show', [$article->author->name, $article->slug]))
+        $this->get(route('article.show', [$article->author->username, $article->slug]))
             ->assertSee($article->title)
             ->assertSee($article->created_at->format('M d'))
             ->assertSee($article->body)
-            ->assertSee($article->author->name)
+            ->assertSee($article->author->username)
             ->assertSee($article->author->created_at->format('d M Y'));
     }
 
     public function test_auth_user_can_write_articles()
     {
         $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $this->get(route('article.create'))->assertStatus(200);
+        
+        $this->actingAs($user)
+            ->get(route('article.create'))->assertStatus(200);
      
         $category = Category::factory()->create();
         
@@ -115,7 +115,7 @@ class ArticleTest extends TestCase
 
         $this->assertEquals(0, $article->views_count);
 
-        $this->get(route('article.show', [$article->author->name, $article->slug]))->assertOk();
+        $this->get(route('article.show', [$article->author->username, $article->slug]))->assertOk();
         
         $this->assertEquals(1, $article->refresh()->views_count);
     }

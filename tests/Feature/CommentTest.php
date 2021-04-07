@@ -55,7 +55,7 @@ class CommentTest extends TestCase
 
         $comment = Comment::first();
 
-        $this->get(route('article.show', [$article->author->name, $article->slug]))
+        $this->get(route('article.show', [$article->author->username, $article->slug]))
             ->assertSee($comment->body)
             ->assertSee($comment->author->name)
             ->assertSee($comment->created_at->format('M d'));
@@ -77,7 +77,7 @@ class CommentTest extends TestCase
         $this->assertDatabaseHas('comments', $comment->only('id'));
 
         $this->delete(route('article.comment.destroy', [$article->id, $comment->id]))
-            ->assertRedirect(route('article.show', [$article->author->name, $article->slug]));
+            ->assertRedirect(route('article.show', [$article->author->username, $article->slug]));
 
         $this->assertDatabaseMissing('comments', $comment->only('id'));
     }
@@ -134,7 +134,7 @@ class CommentTest extends TestCase
 
         $this->patch(route('article.comment.update', [$article->id, $comment->id]), [
             'body' => 'Updated Body'
-        ])->assertRedirect(route('article.show', [$article->author->name, $article->slug]));
+        ])->assertRedirect(route('article.show', [$article->author->username, $article->slug]));
         
         $this->assertEquals('Updated Body', $comment->fresh()->body);
     }

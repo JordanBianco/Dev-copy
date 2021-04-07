@@ -14,7 +14,7 @@
                             type="submit"
                             title="Heart"
                             class="focus:outline-none p-2 rounded-full text-gray-600 hover:text-red-600 hover:bg-red-100 transition duration-300 cursor-pointer
-                            {{ Auth::check() && auth()->user()->hasSaved($article->id) ? 'text-red-600 bg-red-100' : '' }}">
+                            {{ Auth::check() && $article->hasBeenLikedByAuthUser() ? 'text-red-600 bg-red-100' : '' }}">
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                         </button>
 
@@ -60,7 +60,7 @@
                         <div class="flex-shrink-0">
                             <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->email }} alt="user_avatar" class="rounded-full w-8 h-8">
                         </div>
-                        <h3 class="font-semibold">{{ $article->author->name }}</h3>
+                        <h3 class="font-semibold">{{ $article->author->username }}</h3>
                     </div>
                     
                     <span class="text-sm text-gray-600">{{ $article->created_at->format('M d') }}</span>
@@ -90,7 +90,7 @@
                     <div class="flex-shrink-0">
                         <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->email }} alt="user_avatar" class="rounded-full w-12 h-12">
                     </div>
-                    <h4 class="text-lg font-bold -mt-2">{{ $article->author->name }}</h4>
+                    <h4 class="text-lg font-bold -mt-2">{{ $article->author->username }}</h4>
                 </div>
     
                 <div class="text-gray-500">

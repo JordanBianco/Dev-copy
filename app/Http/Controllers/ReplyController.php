@@ -24,6 +24,6 @@ class ReplyController extends Controller
             'body' => $request->body
         ]);
 
-        return redirect()->route('article.show', [$article->author->name, $article->slug]);
+        return redirect()->route('article.show', [$article->author->username, $article->slug]);
     }
 }

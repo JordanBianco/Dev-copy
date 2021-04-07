@@ -1,17 +1,21 @@
-<div class="shadow-sm border border-gray-100 rounded bg-white p-4 flex items-start space-x-4">
+<div class="shadow-sm border border-gray-200 rounded bg-white p-4 flex items-start space-x-4">
 
     <div class="flex-shrink-0">
-        <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->name }}" alt="user_avatar" class="rounded-full w-10 h-10">
+        <a href="{{ route('user.profile', $article->author->username) }}">
+            <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->username }}" alt="user_avatar" class="rounded-full w-10 h-10">
+        </a>
     </div>
 
     <div class="w-full">
         <div class="mb-1">                            
-            <h2 class="-mb-1 text-sm">{{ $article->author->name }}</h2>
+            <a href="{{ route('user.profile', $article->author->username) }}">
+                <h2 class="-mb-1 text-sm font-semibold hover:text-gray-900">{{ $article->author->name }}</h2>
+            </a>
             <span class="text-xs text-gray-600">{{ $article->created_at->format('M d') }}</span>
         </div>
 
         <div>
-            <a href="{{ route('article.show', [$article->author->name, $article->slug]) }}">
+            <a href="{{ route('article.show', [$article->author->username, $article->slug]) }}">
                 <h2 class="font-bold text-2xl">{{ $article->title }}</h2>
             </a>
 
