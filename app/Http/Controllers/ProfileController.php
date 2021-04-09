@@ -9,7 +9,9 @@ class ProfileController extends Controller
 {
     public function index(User $user)
     {
-        return view('user.profile.index', compact('user'));
+        $comments = $user->comments->take(8)->load('commentable');
+
+        return view('user.profile.index', compact(['user', 'comments']));
     }
 
     public function edit()
@@ -20,7 +22,7 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name' => 'required|alpha',
+            'name' => 'required|string',
             'email' => 'required|email|unique:users,email,'. auth()->id(),
             'username' => 'required|alpha_dash|unique:users,username,' . auth()->id(),
         ]);

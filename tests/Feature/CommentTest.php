@@ -208,4 +208,27 @@ class CommentTest extends TestCase
         $this->assertEquals(0, $comment->likes()->count());
         $this->assertEquals(0, $comment->comments()->count());
     }
+
+    public function test_user_can_see_comment_and_the_article_it_belongs_to()
+    {
+        $user = User::factory()->create();
+
+        $comment = Comment::factory()->create(['user_id' => $user->id]);
+
+        $this->get(route('user.profile.comment.show', [$user->username, $comment->id]))
+            ->assertSee($comment->body)
+            ->assertSee($comment->commentable->title);
+    }
+
+    public function test_user_can_see_all_his_comments()
+    {
+        $user = User::factory()->create();
+
+        $comment = Comment::factory()->create(['user_id' => $user->id]);
+        $comment2 = Comment::factory()->create(['user_id' => $user->id]);
+
+        $this->get(route('user.profile.comment.index', $user->username))
+            ->assertSee($comment->body)
+            ->assertSee($comment2->body);
+    }
 }

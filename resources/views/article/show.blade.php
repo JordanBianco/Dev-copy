@@ -56,12 +56,12 @@
 
                 <div class="flex items-center space-x-4">
 
-                    <div class="flex items-center space-x-1">
+                    <a href="{{ route('user.profile', $article->author->username) }}" class="flex items-center space-x-1">
                         <div class="flex-shrink-0">
                             <img src="https://eu.ui-avatars.com/api/?name="{{ $article->author->email }} alt="user_avatar" class="rounded-full w-8 h-8">
                         </div>
-                        <h3 class="font-semibold">{{ $article->author->username }}</h3>
-                    </div>
+                        <h3 class="font-semibold">{{ $article->author->name }}</h3>
+                    </a>
                     
                     <span class="text-sm text-gray-600">{{ $article->created_at->format('M d') }}</span>
 

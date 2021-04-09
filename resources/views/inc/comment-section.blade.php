@@ -46,7 +46,7 @@
                     <div class="flex items-start space-x-1 my-4">
 
                         <div class="flex-shrink-0 mt-2">
-                            <a href="{{ route('user.profile', $article->author->username) }}">
+                            <a href="{{ route('user.profile', $reply->author->username) }}">
                                 <img src="https://eu.ui-avatars.com/api/?name="{{ $reply->author->name }}" alt="user_avatar" class="rounded-full w-8 h-8">
                             </a>
                         </div>
@@ -55,7 +55,7 @@
                             <section class="rounded border border-gray-100 shadow-sm px-3 py-4">
                                 <header class="flex items-center space-x-2">
                     
-                                    <a href="{{ route('user.profile', $article->author->username) }}">
+                                    <a href="{{ route('user.profile', $reply->author->username) }}">
                                         <span class="font-bold">{{ $reply->author->name }}</span>
                                     </a>
 

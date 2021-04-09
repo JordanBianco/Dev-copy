@@ -11,17 +11,21 @@
                 </div>
 
                 @if (auth()->id() === $user->id)
-                <a href="{{ route('user.profile.settings') }}">
+                <a href="{{ route('user.settings.profile.edit') }}">
                     <button class="absolute top-2 right-6 bg-gray-900 hover:bg-black text-white rounded p-2 px-5 max-w-max">
                         Edit Profile
                     </button>
                 </a>
                 @else
-                <a href="">
-                    <button class="absolute top-2 right-6 bg-gray-900 hover:bg-black text-white rounded p-2 px-5 max-w-max">
-                        Follow
+                <form action="{{ route('user.follow', $user->username) }}" method="post">
+                    @csrf
+
+                    <button
+                        type="submit"
+                        class="absolute top-2 right-6 bg-gray-900 hover:bg-black text-white rounded p-2 px-5 max-w-max">
+                            {{ Auth::check() && auth()->user()->isFollowing($user->id) ? 'Following' : 'Follow' }}
                     </button>
-                </a>
+                </form>
                 @endif
 
                 <h2 class="font-bold text-3xl text-center">{{ $user->name }}</h2>
@@ -63,6 +67,33 @@
         </div>
 
         <div class="w-2/3">
+            @if ($comments->count() > 0)
+            <div class="bg-white shadow-sm border border-gray-200 rounded-lg mb-3">
+
+                <h4 class="text-lg font-bold mb-2 p-2">Recent Comments</h4>
+
+                <ul>
+                @foreach ($comments as $comment)
+                    <a href="{{ route('user.profile.comment.show', [$user->username, $comment->id]) }}" class="block p-3 border-b border-gray-100 hover:bg-gray-100">
+                        <h5 class="font-bold">{{ $comment->commentable->title ?? $comment->commentable->body }}</h5>
+                        
+                        <div class="flex items-center space-x-2 text-gray-500 text-sm">
+                            <p>{{ Str::limit($comment->body, 60, '...') }}</p>
+                            <p class="text-xs">{{ $comment->created_at->format('M d') }}</p>
+                        </div>
+                    </a>
+                @endforeach
+
+                @if ($comment->count() >= 9)
+                    <a
+                        href="{{ route('user.profile.comment.index', $user->username) }}"
+                        class="block text-blue-700 text-sm px-2 py-4">View all {{ $user->comments->count() }} comments</a>                    
+                @endif
+
+                </ul>
+            </div>
+            @endif
+
             @foreach ($user->articles as $article)
                 @include('inc.single-article')
             @endforeach

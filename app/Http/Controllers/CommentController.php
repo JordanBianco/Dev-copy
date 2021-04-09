@@ -4,10 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function index(User $user)
+    {
+        $comments = $user->comments->load('commentable');
+
+        return view('user.profile.comment.index', compact(['user', 'comments']));
+    }
+
+    public function show(User $user, Comment $comment)
+    {
+        return view('user.profile.comment.show', compact('comment'));
+    }
+
     public function store(Article $article, Request $request)
     {
         $request->validate([

@@ -48,7 +48,7 @@
                 <!-- Page Content -->
                 <main class="mt-8 flex items-start space-x-4">
     
-                    <div class="w-1/5">
+                    <div class="w-1/5 text-sm">
                         <ul>
                             {{-- Articles --}}
                             <li>
@@ -80,30 +80,30 @@
                                 </a>
                             </li>
 
-                            {{-- Followers --}}
+                            {{-- Following --}}
                             <li>
-                                <a href="{{ route('dashboard.saved') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('dashboard/saved') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
-                                    <span class="{{ request()->is('dashboard/saved') ? 'font-bold' : '' }}">Followers</span>
+                                <a href="{{ route('dashboard.following_user') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('dashboard/following_user') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
+                                    <span class="{{ request()->is('dashboard/following_user') ? 'font-bold' : '' }}">Following users</span>
                                     <span class="bg-gray-300 font-semibold text-xs rounded p-1">
-                                        0
+                                        {{ auth()->user()->following->count() }}
                                     </span>
                                 </a>
                             </li>
 
-                            {{-- Following Users --}}
+                            {{-- Followers --}}
                             <li>
-                                <a href="{{ route('dashboard.saved') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('dashboard/saved') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
-                                    <span class="{{ request()->is('dashboard/saved') ? 'font-bold' : '' }}">Following Users</span>
+                                <a href="{{ route('dashboard.followers') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('dashboard/followers') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
+                                    <span class="{{ request()->is('dashboard/followers') ? 'font-bold' : '' }}">Followers</span>
                                     <span class="bg-gray-300 font-semibold text-xs rounded p-1">
-                                        0
+                                        {{ auth()->user()->followers->count() }}
                                     </span>
                                 </a>
                             </li>
 
                             {{-- Settings --}}
                             <li>
-                                <a href="{{ route('user.profile.settings') }}" class="flex items-center justify-between p-2 rounded {{ request()->is('/settings') ? '' : 'hover:bg-gray-200 transition duration-200' }}">
-                                    <span class="{{ request()->is('/settings') ? 'font-bold' : '' }}">Settings</span>
+                                <a href="{{ route('user.settings.profile.edit') }}" class="flex items-center justify-between p-2 rounded hover:bg-gray-200 transition duration-200">
+                                    <span>Settings</span>
                                 </a>
                             </li>
                             

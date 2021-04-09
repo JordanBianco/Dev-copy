@@ -85,4 +85,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'following', 'user_id', 'following_id')
+            ->withTimestamps()
+            ->orderByPivot('created_at', 'desc');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'following', 'following_id', 'user_id')
+            ->withTimestamps()
+            ->orderByPivot('created_at', 'desc');
+    }
+
+    public function isFollowing($id)
+    {
+        return $this->following->contains($id);
+    }
 }

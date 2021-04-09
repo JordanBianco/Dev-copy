@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Article;
+use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -56,18 +58,20 @@ class ProfileTest extends TestCase
 
     public function test_user_can_update_his_account_info()
     {
+        $this->withoutExceptionHandling();
+
         $user = User::factory()->create();
 
         $this->actingAs($user)
             ->patch(route('user.settings.update', [
                 'name' => 'Updated Name',
-                'email' => 'Updated Email',
-                'username' => 'Updated Username',
+                'email' => 'emailupdated@gmail.com',
+                'username' => 'UpdatedUsername',
             ]));
 
-        $this->assertEquals('Updated Name', $user->name);
-        $this->assertEquals('Updated Email', $user->email);
-        $this->assertEquals('Updated Username', $user->username);
+        $this->assertEquals('Updated Name', $user->fresh()->name);
+        $this->assertEquals('emailupdated@gmail.com', $user->fresh()->email);
+        $this->assertEquals('UpdatedUsername', $user->fresh()->username);
     }
 
     public function test_user_can_update_his_profile_info()
@@ -103,19 +107,14 @@ class ProfileTest extends TestCase
             ]))->assertSessionHasErrors('website_url');
     }
 
-    // public function test_user_can_update_his_coding_info()
-    // {
-    //     $user = User::factory()->create();
+    public function test_user_profile_page_shows_recent_comments()
+    {
+        $user = User::factory()->create();
 
-    //     $this->actingAs($user)
-    //         ->patch(route('user.settings.update', [
-    //             'available_for' => 'Updated Name',
-    //             'email' => 'Updated Email',
-    //             'username' => 'Updated Username',
-    //         ]));
+        Comment::factory()->count(2)->create(['user_id' => $user->id]);
 
-    //     $this->assertEquals('Updated Name', $user->name);
-    //     $this->assertEquals('Updated Email', $user->email);
-    //     $this->assertEquals('Updated Username', $user->username);
-    // }
+        $this->actingAs($user)
+            ->get(route('user.profile', $user->username))
+                ->assertSee(Str::limit($user->comments->first()->body, 60, '...'));
+    }
 }

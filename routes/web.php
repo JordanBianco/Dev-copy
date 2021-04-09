@@ -7,21 +7,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FollowCategory;
 use App\Http\Controllers\ArticleLikeController;
 use App\Http\Controllers\CommentLikeController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\SavedArticlesController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 require __DIR__.'/auth.php';
 
@@ -32,7 +22,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::view('/following_categories', 'user.dashboard.following_categories')->name('dashboard.following_categories');
         Route::get('/saved', [SavedArticlesController::class, 'index'])->name('dashboard.saved');
+        Route::get('/following_user', [FollowerController::class, 'index'])->name('dashboard.following_user');
+        Route::get('/followers', [FollowerController::class, 'followers'])->name('dashboard.followers');
     });
+    
+    // Follower
+    Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('user.follow');
 
     // SavedForLater
     Route::post('/save/{article:id}', [SavedArticlesController::class, 'store'])->name('saved.store');
@@ -65,8 +60,9 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/settings/user/profile', [ProfileController::class, 'updateProfile'])->name('user.settings.update-profile');
 });
 
-// Profile
-Route::get('/{user:username}', [ProfileController::class, 'index'])->name('user.profile');
+// Comments
+Route::get('/{user:username}/comment/{comment:id}', [CommentController::class, 'show'])->name('user.profile.comment.show');
+Route::get('/{user:username}/comments', [CommentController::class, 'index'])->name('user.profile.comment.index');
 
 // Category
 Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
@@ -75,3 +71,6 @@ Route::get('/c/{category:name}', [CategoryController::class, 'show'])->name('cat
 // Articles
 Route::get('/', [ArticleController::class, 'index'])->name('article.index');
 Route::get('/{user:username}/{article:slug}', [ArticleController::class, 'show'])->name('article.show');
+
+// Profile
+Route::get('/{user:username}', [ProfileController::class, 'index'])->name('user.profile');
