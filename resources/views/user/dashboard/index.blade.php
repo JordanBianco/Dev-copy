@@ -16,7 +16,7 @@
                         </div>
                 
                         <div>
-                            <a href="{{ route('article.show', [auth()->user()->name, $article->slug]) }}">
+                            <a href="{{ route('article.show', [auth()->user()->username, $article->slug]) }}">
                                 <h2 class="font-bold text-2xl">{{ $article->title }}</h2>
                             </a>
                 

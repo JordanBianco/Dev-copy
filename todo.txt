@@ -1,2 +1,4 @@
-notifiche 
-email
+SISTEMARE TITOLI DI OGNI PAGINA E RESPONSIVENESS
+
+Show page author details
+

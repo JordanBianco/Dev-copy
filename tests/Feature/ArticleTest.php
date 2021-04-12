@@ -2,12 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Mail\NewArticleCreated;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ArticleTest extends TestCase
@@ -173,19 +172,5 @@ class ArticleTest extends TestCase
 
         $this->assertEquals(0, $article->comments()->count());
         $this->assertEquals(0, $article->likes()->count());
-    }
-
-    public function test_an_email_is_sent_when_the_user_write_an_article()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $article = Article::factory()->create(['user_id' => $user->id]);
-
-        Mail::fake();
-        Mail::to($article->author->email)
-            ->send(new NewArticleCreated($article));
-
-        Mail::assertQueued(NewArticleCreated::class);
     }
 }

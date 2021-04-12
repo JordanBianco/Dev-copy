@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
+use App\Notifications\NewCommentReceived;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class CommentController extends Controller
 {
@@ -27,11 +29,13 @@ class CommentController extends Controller
             'body' => 'required|max:3000'
         ]);
 
-        auth()->user()->comments()->create([
+        $comment = auth()->user()->comments()->create([
             'commentable_id' => $article->id,
             'commentable_type' => get_class($article),
             'body' => $request->body,
         ]);
+
+        Notification::send($article->author, new NewCommentReceived($article, $comment));
 
         return back();
     }

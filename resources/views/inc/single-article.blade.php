@@ -7,7 +7,7 @@
     </div>
 
     <div class="w-full">
-        <div class="mb-1">                            
+        <div class="mb-1">
             <a href="{{ route('user.profile', $article->author->username) }}">
                 <h2 class="-mb-1 text-sm font-semibold hover:text-gray-900">{{ $article->author->name }}</h2>
             </a>

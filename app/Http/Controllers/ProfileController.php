@@ -52,4 +52,13 @@ class ProfileController extends Controller
 
         return back();
     }
+
+    public function destroy(User $user)
+    {
+        abort_if(auth()->id() !== $user->id, 403);
+
+        $user->delete();
+
+        return redirect(route('article.index'));
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Notifications\NewArticleLikeReceived;
+use Illuminate\Support\Facades\Notification;
 
 class ArticleLikeController extends Controller
 {
@@ -20,6 +22,8 @@ class ArticleLikeController extends Controller
             $article->likes()->create([
                 'user_id' => auth()->id()
             ]);
+
+            Notification::send($article->author, new NewArticleLikeReceived(auth()->user()->username, $article));
         }
 
         return redirect()->back();

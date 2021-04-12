@@ -16,9 +16,9 @@ class FollowerTest extends TestCase
         $user2 = User::factory()->create();
         
         $this->actingAs($user);
-
         $this->post(route('user.follow', $user2->username));
 
+        $this->assertEquals(1, $user2->followers->count());
         $this->assertEquals(1, $user->following->count());
     }
 
@@ -37,7 +37,7 @@ class FollowerTest extends TestCase
         $this->assertEquals($user2->name, $user->following->first()->name);
     }
 
-    public function test_user_can_view_who_his_followers()
+    public function test_user_can_view_his_followers()
     {
         $user = User::factory()->create();
         $user2 = User::factory()->create();

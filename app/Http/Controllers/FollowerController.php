@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\NewFollower;
+use Illuminate\Support\Facades\Notification;
 
 class FollowerController extends Controller
 {
@@ -23,7 +25,11 @@ class FollowerController extends Controller
     public function store(User $user)
     {
         auth()->user()->following()->toggle($user->id);
-
+        
+        if (auth()->user()->isFollowing($user)) {
+            Notification::send($user, new NewFollower(auth()->user()->username));
+        }
+        
         return back();
     }
 }

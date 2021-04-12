@@ -104,6 +104,19 @@
         </button>
     </form>
 
+    <div class="bg-white shadow-sm border p-6 py-10 border-gray-200 rounded-lg mb-10 flex items-center space-x-4">
+        
+        <form action="{{ route('user.delete', auth()->id()) }}" method="post">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-sm border text-red-500 border-red-500 p-2 px-4 rounded hover:bg-red-500 hover:text-white transition duration-200">
+                DELETE ACCOUNT
+            </button>
+        </form>
+
+        <p class="text-gray-600">Attenzione! Questa azione è irreversibile</p>
+    </div>
+
     {{-- <form action="{{ route('user.settings.update-skills') }}" method="POST" class="bg-white shadow-sm border p-6 border-gray-200 rounded-lg mb-10">
 
         @method('PATCH')

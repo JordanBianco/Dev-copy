@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Notifications\NewCommentLikeReceived;
+use Illuminate\Support\Facades\Notification;
 
 class CommentLikeController extends Controller
 {
@@ -19,6 +21,8 @@ class CommentLikeController extends Controller
             $comment->likes()->create([
                 'user_id' => auth()->id(),
             ]);
+
+            Notification::send($comment->author, new NewCommentLikeReceived(auth()->user()->username, $comment));
         }
                 
         return back();

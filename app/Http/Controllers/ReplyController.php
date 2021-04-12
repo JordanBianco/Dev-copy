@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Comment;
+use App\Notifications\NewReplyReceived;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class ReplyController extends Controller
 {
@@ -19,10 +21,12 @@ class ReplyController extends Controller
             'body' => 'required|max:3000'
         ]);
 
-        $comment->comments()->create([
+        $reply = $comment->comments()->create([
             'user_id' => auth()->id(),
             'body' => $request->body
         ]);
+
+        Notification::send($comment->author, new NewReplyReceived($reply, $comment, $article));
 
         return redirect()->route('article.show', [$article->author->username, $article->slug]);
     }

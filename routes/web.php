@@ -8,6 +8,7 @@ use App\Http\Controllers\FollowCategory;
 use App\Http\Controllers\ArticleLikeController;
 use App\Http\Controllers\CommentLikeController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\SavedArticlesController;
@@ -58,6 +59,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/settings', [ProfileController::class, 'edit'])->name('user.settings.profile.edit');
     Route::patch('/settings/user', [ProfileController::class, 'update'])->name('user.settings.update');
     Route::patch('/settings/user/profile', [ProfileController::class, 'updateProfile'])->name('user.settings.update-profile');
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('user.notification');
+    Route::post('/notifications/{notification:id}', [NotificationController::class, 'store'])->name('user.notification.read');
+    Route::post('/notifications', [NotificationController::class, 'readAll'])->name('user.notification.readAll');
+
+    // Delete Account
+    Route::delete('/delete/{user:id}', [ProfileController::class, 'destroy'])->name('user.delete');
 });
 
 // Comments
